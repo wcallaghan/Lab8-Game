@@ -4,7 +4,7 @@
 
 #include <cstdlib>
 #include <ctime>
-
+#include<string>
 
 #ifndef MAZE_HPP_
 #define MAZE_HPP_
@@ -33,7 +33,7 @@ struct RoomPair {
 //
 // initialization functions
 //
-int randNum();  //generate a random number
+int RandNum();  //generate a random number
 
 void clearWalls(RoomPair[]); // places every RoomPair to connect two non-existing rooms
                          // where x-coordinate is -1
@@ -67,7 +67,7 @@ void printMaze(const RoomPair[]); // prints the locations of all the internal wa
 // game functions
 //
 const Room nextMove(const Room& currentRoom); // asks the user for the room to move
-                                              // adjacent to currentRoom
+char getAnswer(string);                                             // adjacent to currentRoom
 
 // note that checkMaze() and matchRoom() are also  used in the game
 

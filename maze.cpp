@@ -3,13 +3,14 @@
 using namespace std;
 
 void clearWalls(RoomPair r[]) {
-	for (int i = 0; i < mazeSize; ++i) {
+	for (int i = 0; i < numWalls; ++i) {
 		r[i].one.x = -1; r[i].two.x = -1;
 		r[i].one.y = '*'; r[i].two.y = '*';
 	}
 
 }
-const RoomPair pickwall() {
+
+const RoomPair pickWall() {
 	bool selected = 0;
 	int random = RandNum();
 
@@ -57,7 +58,7 @@ const RoomPair pickwall() {
 			selected = 1;
 			break;
 		case 4: //down
-			adjacentRooms.two.y = (adjacentRooms.one.y < 100) ? ++tmp : adjacentRooms.one.y;
+			adjacentRooms.two.y = (adjacentRooms.one.y <= 100) ? ++tmp : adjacentRooms.one.y;
 			adjacentRooms.two.x = adjacentRooms.one.x;
 			selected = 1;
 			break;
@@ -75,29 +76,25 @@ bool matchPair(const RoomPair& r1, const RoomPair& r2) {
 	return (matchRoom(r1.one, r1.two) && matchRoom(r2.one, r2.two));
 }
 int RandNum() {
-	srand(time(nullptr)); return rand() % 4 + 1;
+	 return rand() % 4 + 1;
 }
 int checkMaze(const RoomPair walls[], const RoomPair rooms) {
 	for (int i = 0; i < numWalls; ++i) {
 		if (matchPair(walls[i], rooms))
-			return 1;
-		else
-			return 0;
+			return i;		
 	}
-
+	return -1;
 }
 void build(RoomPair rooms[]) {
 	int builtWalls = 0;
 
 	while (builtWalls < numWalls) {
-		RoomPair walls = pickwall();
-		if (checkMaze(rooms, walls) == 1) {
+		RoomPair walls = pickWall();
+		if (checkMaze(rooms, walls) == -1) {
 			rooms[builtWalls] = walls;
 			++builtWalls;
 		}
-
 	}
-
 }
 void printRoom(const Room& r) {
 	cout << r.x << r.y;
@@ -107,12 +104,12 @@ void printPair(const RoomPair& rp) {
 	cout << "|";
 	printRoom(rp.two);
 }
-void printMaze(RoomPair walls[]) {
+void printMaze(const RoomPair walls[]) {
 	for (int i = 0; i < numWalls; ++i) {
 		printPair(walls[i]);
 	}
 }
-Room nextMove(Room CurrentLocation) {
+const Room nextMove(const Room& CurrentLocation) {
 	char direction;
 	Room newLocation;
 	cout << "Which way do you want to move? Up: u Down: d Left: l Right: r" << endl;

@@ -5,7 +5,7 @@ using namespace std;
 void clearWalls(RoomPair r[]) {
 	for (int i = 0; i < mazeSize; ++i) {
 		r[i].one.x = -1; r[i].two.x = -1;
-			r[i].one.y = '*'; r[i].two.y = '*';
+		r[i].one.y = '*'; r[i].two.y = '*';
 	}
 
 }
@@ -77,7 +77,7 @@ bool matchPair(const RoomPair& r1, const RoomPair& r2) {
 int RandNum() {
 	srand(time(nullptr)); return rand() % 4 + 1;
 }
-int checkMaze(const RoomPair[] walls, const RoomPair rooms) {
+int checkMaze(const RoomPair walls[], const RoomPair rooms) {
 	for (int i = 0; i < numWalls; ++i) {
 		if (matchPair(walls[i], rooms))
 			return 1;
@@ -86,7 +86,7 @@ int checkMaze(const RoomPair[] walls, const RoomPair rooms) {
 	}
 
 }
-void build(RoomPair[] rooms) {
+void build(RoomPair rooms[]) {
 	int builtWalls = 0;
 
 	while (builtWalls < numWalls) {
@@ -107,7 +107,7 @@ void printPair(const RoomPair& rp) {
 	cout << "|";
 	printRoom(rp.two);
 }
-void printMaze(RoomPair[] walls) {
+void printMaze(RoomPair walls[]) {
 	for (int i = 0; i < numWalls; ++i) {
 		printPair(walls[i]);
 	}
